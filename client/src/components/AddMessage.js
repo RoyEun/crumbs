@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 
-export class AddMessage extends React.Component {
+class AddMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,3 +46,8 @@ export class AddMessage extends React.Component {
   }
 }
 
+AddMessage.propTypes = {
+  addMessageToChatRoom: React.PropTypes.func,
+};
+
+export default AddMessage;

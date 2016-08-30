@@ -12,3 +12,9 @@ export const MessageListEntry = (props) => {
     </ListGroupItem>
   );
 };
+
+MessageListEntry.propTypes = {
+  message: React.PropTypes.object,
+};
+
+export default MessageListEntry;

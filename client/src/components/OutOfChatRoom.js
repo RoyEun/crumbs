@@ -6,7 +6,7 @@ const style = {
   height: '100%',
 };
 
-export const OutOfChatRoom = ({ createChatRoom }) => (
+const OutOfChatRoom = ({ createChatRoom }) => (
   <div style={style}>
     <h2>you are not in a Chatroom!</h2>
     <br />
@@ -22,3 +22,9 @@ export const OutOfChatRoom = ({ createChatRoom }) => (
     <br />
   </div>
 );
+
+OutOfChatRoom.propTypes = {
+  createChatRoom: React.PropTypes.func,
+};
+
+export default OutOfChatRoom;

@@ -23,3 +23,12 @@ export const UserEntry = ({
     </form>
   </div>
 );
+
+UserEntry.propTypes = {
+  userChange: React.PropTypes.func,
+  usernameText: React.PropTypes.string,
+  passwordChange: React.PropTypes.func,
+  passwordText: React.PropTypes.string,
+};
+
+export default UserEntry;

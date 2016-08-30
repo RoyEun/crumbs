@@ -5,9 +5,9 @@ mongoose.Promise = require('bluebird');
 module.exports = {
   validateUserLogin: (username, password, socket) => {
     User.findOne({ username }, (err, userData) => {
-      var user = false;
+      let user = '';
       if (userData) {
-        user = userData.password === password ? username : false;
+        user = userData.password === password ? username : '';
       }
       socket.emit('Authentication', user);
     });
@@ -16,7 +16,7 @@ module.exports = {
   validateUserSignup: (username, password, socket) => {
     User.findOne({ username }, (err, userData) => {
       if (userData) {
-        socket.emit('Authentication', false);
+        socket.emit('Authentication', '');
       } else {
         User.create({
           username,

@@ -2,9 +2,9 @@ import React from 'react';
 import { Jumbotron } from 'react-bootstrap';
 import Login from './Login';
 import SignUp from './SignUp';
-import { UserEntry } from './UserEntry';
+import UserEntry from './UserEntry';
 
-export class Authentication extends React.Component {
+class Authentication extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,3 +94,10 @@ export class Authentication extends React.Component {
     );
   }
 }
+
+Authentication.propTypes = {
+  socket: React.PropTypes.object,
+};
+
+export default Authentication;
+

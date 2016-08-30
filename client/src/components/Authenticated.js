@@ -1,9 +1,9 @@
 import React from 'react';
-import { ChatRoom } from './ChatRoom.js';
-import { OutOfChatRoom } from './OutOfChatRoom.js';
 import { Jumbotron, Button } from 'react-bootstrap';
+import ChatRoom from './ChatRoom.js';
+import OutOfChatRoom from './OutOfChatRoom.js';
 
-export const Authenticated = ({
+const Authenticated = ({
   messages,
   userLoggedIn,
   addMessageToChatRoom,
@@ -55,3 +55,13 @@ export const Authenticated = ({
     </div>
   );
 };
+
+Authenticated.propTypes = {
+  messages: React.PropTypes.array,
+  userLoggedIn: React.PropTypes.sting,
+  addMessageToChatRoom: React.PropTypes.func,
+  createChatRoom: React.PropTypes.func,
+  logOutUser: React.PropTypes.func,
+};
+
+export default Authenticated;

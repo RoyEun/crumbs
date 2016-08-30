@@ -21118,7 +21118,11 @@
 
 	var _Authentication = __webpack_require__(173);
 
+	var _Authentication2 = _interopRequireDefault(_Authentication);
+
 	var _Authenticated = __webpack_require__(441);
+
+	var _Authenticated2 = _interopRequireDefault(_Authenticated);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21139,7 +21143,7 @@
 	    _this.state = {
 	      messages: null,
 	      location: '37.7837-122.4090',
-	      userLoggedIn: false
+	      userLoggedIn: ''
 	    };
 	    return _this;
 	  }
@@ -21212,7 +21216,7 @@
 	    key: 'logOutUser',
 	    value: function logOutUser() {
 	      this.setState({
-	        userLoggedIn: false
+	        userLoggedIn: ''
 	      });
 	    }
 	  }, {
@@ -21226,7 +21230,7 @@
 	      var socket = this.props.socket;
 
 
-	      var loggedIn = _react2.default.createElement(_Authenticated.Authenticated, {
+	      var loggedIn = _react2.default.createElement(_Authenticated2.default, {
 	        messages: messages,
 	        userLoggedIn: userLoggedIn,
 	        addMessageToChatRoom: function addMessageToChatRoom(message) {
@@ -21240,7 +21244,7 @@
 	        }
 	      });
 
-	      var notLoggedIn = _react2.default.createElement(_Authentication.Authentication, {
+	      var notLoggedIn = _react2.default.createElement(_Authentication2.default, {
 	        socket: socket
 	      });
 
@@ -21257,6 +21261,10 @@
 	  return App;
 	}(_react2.default.Component);
 
+	App.propTypes = {
+	  socket: _react2.default.PropTypes.object
+	};
+
 	exports.default = App;
 
 /***/ },
@@ -21268,7 +21276,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Authentication = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -21288,6 +21295,8 @@
 
 	var _UserEntry = __webpack_require__(440);
 
+	var _UserEntry2 = _interopRequireDefault(_UserEntry);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21296,7 +21305,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Authentication = exports.Authentication = function (_React$Component) {
+	var Authentication = function (_React$Component) {
 	  _inherits(Authentication, _React$Component);
 
 	  function Authentication(props) {
@@ -21405,7 +21414,7 @@
 	            ' Authentication '
 	          )
 	        ),
-	        _react2.default.createElement(_UserEntry.UserEntry, {
+	        _react2.default.createElement(_UserEntry2.default, {
 	          userChange: function userChange(e) {
 	            _this2.handleUserTextChange(e);
 	          },
@@ -21422,6 +21431,12 @@
 
 	  return Authentication;
 	}(_react2.default.Component);
+
+	Authentication.propTypes = {
+	  socket: _react2.default.PropTypes.object
+	};
+
+	exports.default = Authentication;
 
 /***/ },
 /* 174 */
@@ -40919,6 +40934,15 @@
 	  );
 	};
 
+	UserEntry.propTypes = {
+	  userChange: _react2.default.PropTypes.func,
+	  usernameText: _react2.default.PropTypes.string,
+	  passwordChange: _react2.default.PropTypes.func,
+	  passwordText: _react2.default.PropTypes.string
+	};
+
+	exports.default = UserEntry;
+
 /***/ },
 /* 441 */
 /***/ function(module, exports, __webpack_require__) {
@@ -40928,21 +40952,24 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Authenticated = undefined;
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactBootstrap = __webpack_require__(174);
+
 	var _ChatRoom = __webpack_require__(442);
+
+	var _ChatRoom2 = _interopRequireDefault(_ChatRoom);
 
 	var _OutOfChatRoom = __webpack_require__(550);
 
-	var _reactBootstrap = __webpack_require__(174);
+	var _OutOfChatRoom2 = _interopRequireDefault(_OutOfChatRoom);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Authenticated = exports.Authenticated = function Authenticated(_ref) {
+	var Authenticated = function Authenticated(_ref) {
 	  var messages = _ref.messages;
 	  var userLoggedIn = _ref.userLoggedIn;
 	  var addMessageToChatRoom = _ref.addMessageToChatRoom;
@@ -40959,13 +40986,13 @@
 	    background: '#CCC'
 	  };
 
-	  var chatRoom = _react2.default.createElement(_ChatRoom.ChatRoom, {
+	  var chatRoom = _react2.default.createElement(_ChatRoom2.default, {
 	    messages: messages,
 	    user: userLoggedIn,
 	    addMessageToChatRoom: addMessageToChatRoom
 	  });
 
-	  var outOfChatRoom = _react2.default.createElement(_OutOfChatRoom.OutOfChatRoom, {
+	  var outOfChatRoom = _react2.default.createElement(_OutOfChatRoom2.default, {
 	    createChatRoom: createChatRoom
 	  });
 
@@ -41005,6 +41032,16 @@
 	  );
 	};
 
+	Authenticated.propTypes = {
+	  messages: _react2.default.PropTypes.array,
+	  userLoggedIn: _react2.default.PropTypes.sting,
+	  addMessageToChatRoom: _react2.default.PropTypes.func,
+	  createChatRoom: _react2.default.PropTypes.func,
+	  logOutUser: _react2.default.PropTypes.func
+	};
+
+	exports.default = Authenticated;
+
 /***/ },
 /* 442 */
 /***/ function(module, exports, __webpack_require__) {
@@ -41014,7 +41051,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.ChatRoom = undefined;
 
 	var _react = __webpack_require__(1);
 
@@ -41022,20 +41058,31 @@
 
 	var _AddMessage = __webpack_require__(443);
 
+	var _AddMessage2 = _interopRequireDefault(_AddMessage);
+
 	var _MessageList = __webpack_require__(444);
+
+	var _MessageList2 = _interopRequireDefault(_MessageList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ChatRoom = exports.ChatRoom = function ChatRoom(_ref) {
+	var ChatRoom = function ChatRoom(_ref) {
 	  var addMessageToChatRoom = _ref.addMessageToChatRoom;
 	  var messages = _ref.messages;
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_AddMessage.AddMessage, { addMessageToChatRoom: addMessageToChatRoom }),
-	    _react2.default.createElement(_MessageList.MessageList, { messages: messages })
+	    _react2.default.createElement(_AddMessage2.default, { addMessageToChatRoom: addMessageToChatRoom }),
+	    _react2.default.createElement(_MessageList2.default, { messages: messages })
 	  );
 	};
+
+	ChatRoom.propTypes = {
+	  addMessageToChatRoom: _react2.default.PropTypes.func,
+	  messages: _react2.default.PropTypes.array
+	};
+
+	exports.default = ChatRoom;
 
 /***/ },
 /* 443 */
@@ -41046,7 +41093,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.AddMessage = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -41064,7 +41110,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AddMessage = exports.AddMessage = function (_React$Component) {
+	var AddMessage = function (_React$Component) {
 	  _inherits(AddMessage, _React$Component);
 
 	  function AddMessage(props) {
@@ -41136,6 +41182,12 @@
 	  return AddMessage;
 	}(_react2.default.Component);
 
+	AddMessage.propTypes = {
+	  addMessageToChatRoom: _react2.default.PropTypes.func
+	};
+
+	exports.default = AddMessage;
+
 /***/ },
 /* 444 */
 /***/ function(module, exports, __webpack_require__) {
@@ -41145,7 +41197,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.MessageList = undefined;
 
 	var _react = __webpack_require__(1);
 
@@ -41155,9 +41206,11 @@
 
 	var _MessageListEntry = __webpack_require__(445);
 
+	var _MessageListEntry2 = _interopRequireDefault(_MessageListEntry);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var MessageList = exports.MessageList = function MessageList(_ref) {
+	var MessageList = function MessageList(_ref) {
 	  var messages = _ref.messages;
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
@@ -41166,11 +41219,17 @@
 	      _reactBootstrap.ListGroup,
 	      { fill: true },
 	      messages.map(function (message, i) {
-	        return _react2.default.createElement(_MessageListEntry.MessageListEntry, { key: i, message: message });
+	        return _react2.default.createElement(_MessageListEntry2.default, { key: i, message: message });
 	      })
 	    )
 	  );
 	};
+
+	MessageList.propTypes = {
+	  messages: _react2.default.PropTypes.array
+	};
+
+	exports.default = MessageList;
 
 /***/ },
 /* 445 */
@@ -41208,6 +41267,12 @@
 	    username + ' ' + message + ' ' + (0, _moment2.default)(createdAt).fromNow()
 	  );
 	};
+
+	MessageListEntry.propTypes = {
+	  message: _react2.default.PropTypes.object
+	};
+
+	exports.default = MessageListEntry;
 
 /***/ },
 /* 446 */
@@ -55266,7 +55331,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.OutOfChatRoom = undefined;
 
 	var _react = __webpack_require__(1);
 
@@ -55281,7 +55345,7 @@
 	  height: '100%'
 	};
 
-	var OutOfChatRoom = exports.OutOfChatRoom = function OutOfChatRoom(_ref) {
+	var OutOfChatRoom = function OutOfChatRoom(_ref) {
 	  var createChatRoom = _ref.createChatRoom;
 	  return _react2.default.createElement(
 	    'div',
@@ -55310,6 +55374,12 @@
 	    _react2.default.createElement('br', null)
 	  );
 	};
+
+	OutOfChatRoom.propTypes = {
+	  createChatRoom: _react2.default.PropTypes.func
+	};
+
+	exports.default = OutOfChatRoom;
 
 /***/ },
 /* 551 */

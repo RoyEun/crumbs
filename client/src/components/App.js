@@ -1,15 +1,15 @@
 import React from 'react';
-import { Authentication } from './Authentication';
-import { Authenticated } from './Authenticated';
+import Authentication from './Authentication';
+import Authenticated from './Authenticated';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       messages: null,
       location: '37.7837-122.4090',
-      userLoggedIn: false,
+      userLoggedIn: '',
     };
   }
 
@@ -70,7 +70,7 @@ export default class App extends React.Component {
 
   logOutUser() {
     this.setState({
-      userLoggedIn: false,
+      userLoggedIn: '',
     });
   }
 
@@ -103,3 +103,9 @@ export default class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  socket: React.PropTypes.object,
+};
+
+export default App;
