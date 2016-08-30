@@ -64,10 +64,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var demoSocket = (0, _socket2.default)('http://localhost:8000');
-	var mainSocket = (0, _socket2.default)('http://localhost:3000');
+	var socket = (0, _socket2.default)('http://localhost:3000');
 
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, { mainSocket: mainSocket, demoSocket: demoSocket }), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, { socket: socket }), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -21140,7 +21139,6 @@
 	    _this.state = {
 	      messages: null,
 	      location: '37.7837-122.4090',
-	      demoMode: true,
 	      userLoggedIn: false
 	    };
 	    return _this;
@@ -21151,32 +21149,20 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 
-	      this.addMessageToChatRoom = this.addMessageToChatRoom.bind(this);
-	      this.createChatRoom = this.createChatRoom.bind(this);
-	      this.logOutUser = this.logOutUser.bind(this);
+	      var socket = this.props.socket;
 
-	      //selects and executes which source to use for setting the location state of application: demo or html5 nav
-	      var locationSource = !!this.state.demoMode ? this.updateLocationStateDemo.bind(this) : this.updateLocationState.bind(this);
-	      setInterval(locationSource, 500);
 
-	      //listens for a location update from the demo server
-	      this.props.demoSocket.on('updateLocationStateDemo', function (data) {
-	        var position = {};
-	        position.coords = {};
-	        position.coords.latitude = data.lat;
-	        position.coords.longitude = data.lon;
-	        _this2.setPosition(position);
-	      });
+	      setInterval(this.updateLocationState.bind(this), 500);
 
 	      //listens for a messages update from the main server
-	      this.props.mainSocket.on('updateMessagesState', function (location) {
+	      socket.on('updateMessagesState', function (location) {
 	        var messages = location ? location.messages : null;
 	        _this2.setState({
 	          messages: messages
 	        });
 	      });
 
-	      this.props.mainSocket.on('Authentication', function (user) {
+	      socket.on('Authentication', function (user) {
 	        _this2.setState({
 	          userLoggedIn: user
 	        });
@@ -21191,10 +21177,12 @@
 	      var latRound = position.coords.latitude.toFixed(3);
 	      var lonRound = position.coords.longitude.toFixed(3);
 	      var location = latRound.toString() + lonRound.toString();
-	      this.setState({
-	        location: location
-	      });
-	      this.updateMessagesState();
+	      if (location !== this.state.location) {
+	        this.setState({
+	          location: location
+	        });
+	        this.updateMessagesState();
+	      }
 	    }
 
 	    //will watch our location and frequently call set position
@@ -21209,20 +21197,12 @@
 	      }
 	    }
 
-	    //socket request to demo server to update the state of the location of the app
-
-	  }, {
-	    key: 'updateLocationStateDemo',
-	    value: function updateLocationStateDemo() {
-	      this.props.demoSocket.emit('updateLocationStateDemo', null);
-	    }
-
 	    //socket request to the main server to update messages state based on location state
 
 	  }, {
 	    key: 'updateMessagesState',
 	    value: function updateMessagesState() {
-	      this.props.mainSocket.emit('updateMessagesState', this.state.location);
+	      this.props.socket.emit('updateMessagesState', this.state.location);
 	    }
 
 	    //socket request to the main server to create a new chatroom
@@ -21230,7 +21210,7 @@
 	  }, {
 	    key: 'createChatRoom',
 	    value: function createChatRoom() {
-	      this.props.mainSocket.emit('createChatRoom', this.state.location);
+	      this.props.socket.emit('createChatRoom', this.state.location);
 	    }
 
 	    //socket request to chatroom to append a new message to
@@ -21238,7 +21218,11 @@
 	  }, {
 	    key: 'addMessageToChatRoom',
 	    value: function addMessageToChatRoom(message) {
-	      this.props.mainSocket.emit('addMessageToChatRoom', { location: this.state.location, message: message, username: this.state.userLoggedIn });
+	      this.props.socket.emit('addMessageToChatRoom', {
+	        location: this.state.location,
+	        message: message,
+	        username: this.state.userLoggedIn
+	      });
 	    }
 	  }, {
 	    key: 'logOutUser',
@@ -21250,16 +21234,30 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
+	      var _state = this.state;
+	      var messages = _state.messages;
+	      var userLoggedIn = _state.userLoggedIn;
+	      var socket = this.props.socket;
+
+
 	      var loggedIn = _react2.default.createElement(_Authenticated.Authenticated, {
-	        messages: this.state.messages,
-	        userLoggedIn: this.state.userLoggedIn,
-	        addMessageToChatRoom: this.addMessageToChatRoom,
-	        createChatRoom: this.createChatRoom,
-	        logOutUser: this.logOutUser
+	        messages: messages,
+	        userLoggedIn: userLoggedIn,
+	        addMessageToChatRoom: function addMessageToChatRoom(message) {
+	          _this3.addMessageToChatRoom(message);
+	        },
+	        createChatRoom: function createChatRoom() {
+	          _this3.createChatRoom();
+	        },
+	        logOutUser: function logOutUser() {
+	          _this3.logOutUser();
+	        }
 	      });
 
 	      var notLoggedIn = _react2.default.createElement(_Authentication.Authentication, {
-	        mainSocket: this.props.mainSocket
+	        socket: socket
 	      });
 
 	      var childToRender = !!this.state.userLoggedIn ? loggedIn : notLoggedIn;
@@ -21362,12 +21360,12 @@
 	  }, {
 	    key: 'validateUserLogin',
 	    value: function validateUserLogin() {
-	      this.props.mainSocket.emit('validateUserLogin', { username: this.state.usernameText, password: this.state.passwordText });
+	      this.props.socket.emit('validateUserLogin', { username: this.state.usernameText, password: this.state.passwordText });
 	    }
 	  }, {
 	    key: 'validateUserSignup',
 	    value: function validateUserSignup() {
-	      this.props.mainSocket.emit('validateUserSignup', { username: this.state.usernameText, password: this.state.passwordText });
+	      this.props.socket.emit('validateUserSignup', { username: this.state.usernameText, password: this.state.passwordText });
 	    }
 	  }, {
 	    key: 'render',

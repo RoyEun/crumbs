@@ -26,6 +26,7 @@ module.exports = {
 
   // that inputs a {location: [long, lat], message: 'string'} object and pushes string into that token's messages array
   addMessageToChatRoom: (location, message, username, socket) => {
+    console.log('location, message, username, socket', location, message, username, socket);
     var tokenDataReturn = {};
     Chatroom.findOne({ location }, (err, tokenData) => {
       tokenDataReturn = tokenData;
