@@ -1,10 +1,10 @@
 import React from 'react';
 import { Jumbotron } from 'react-bootstrap';
-import { Login } from './Login';
-import { SignUp } from './SignUp';
-import { UserEntry } from './UserEntry';
+import Login from './Login';
+import SignUp from './SignUp';
+import UserEntry from './UserEntry';
 
-export class Authentication extends React.Component {
+class Authentication extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,14 +12,6 @@ export class Authentication extends React.Component {
       usernameText: '',
       passwordText: '',
     };
-  }
-
-  componentWillMount() {
-    this.validateUserSignup = this.validateUserSignup.bind(this);
-    this.validateUserLogin = this.validateUserLogin.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleUserTextChange = this.handleUserTextChange.bind(this);
-    this.handlePasswordTextChange = this.handlePasswordTextChange.bind(this);
   }
 
   handleClick() {
@@ -40,14 +32,18 @@ export class Authentication extends React.Component {
     });
   }
 
-  // Pass down clickhandler to Login
-
   validateUserLogin() {
-    this.props.mainSocket.emit('validateUserLogin', { username: this.state.usernameText, password: this.state.passwordText });
+    this.props.socket.emit('validateUserLogin', {
+      username: this.state.usernameText,
+      password: this.state.passwordText,
+    });
   }
 
   validateUserSignup() {
-    this.props.mainSocket.emit('validateUserSignup', { username: this.state.usernameText, password: this.state.passwordText });
+    this.props.socket.emit('validateUserSignup', {
+      username: this.state.usernameText,
+      password: this.state.passwordText,
+    });
   }
 
   render() {
@@ -67,15 +63,15 @@ export class Authentication extends React.Component {
 
     const login = (
       <Login
-        validateUserLogin={this.validateUserLogin}
-        signUp={this.handleClick}
+        validateUserLogin={() => { this.validateUserLogin(); }}
+        signUp={() => { this.handleClick(); }}
       />
     );
 
     const signup = (
       <SignUp
-        validateUserSignup={this.validateUserSignup}
-        logIn={this.handleClick}
+        validateUserSignup={() => { this.validateUserSignup(); }}
+        logIn={() => { this.handleClick(); }}
       />
     );
 
@@ -88,8 +84,8 @@ export class Authentication extends React.Component {
           <p> Authentication </p>
         </Jumbotron>
         <UserEntry
-          userChange={this.handleUserTextChange}
-          passwordChange={this.handlePasswordTextChange}
+          userChange={(e) => { this.handleUserTextChange(e); }}
+          passwordChange={(e) => { this.handlePasswordTextChange(e); }}
           usernameText={this.state.usernameText}
           passwordText={this.state.passwordText}
         />
@@ -98,3 +94,10 @@ export class Authentication extends React.Component {
     );
   }
 }
+
+Authentication.propTypes = {
+  socket: React.PropTypes.object,
+};
+
+export default Authentication;
+

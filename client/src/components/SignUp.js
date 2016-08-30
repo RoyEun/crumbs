@@ -1,17 +1,20 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-export const SignUp = (props) => (
+const SignUp = ({
+  logIn,
+  validateUserSignup,
+}) => (
   <div>
     <form>
       <Button
-        onClick={props.logIn}
+        onClick={logIn}
         bsStyle="link"
-      > 
+      >
         Already have an account?
       </Button>
       <Button
-        onClick={props.validateUserSignup.bind(this)}
+        onClick={validateUserSignup}
         bsStyle="primary"
       >
         Sign Up
@@ -20,3 +23,9 @@ export const SignUp = (props) => (
   </div>
 );
 
+SignUp.propTypes = {
+  logIn: React.PropTypes.func,
+  validateUserSignup: React.PropTypes.func,
+};
+
+export default SignUp;

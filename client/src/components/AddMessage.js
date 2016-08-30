@@ -1,17 +1,12 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 
-export class AddMessage extends React.Component {
+class AddMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       message: '',
     };
-  }
-
-  componentWillMount() {
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(e) {
@@ -36,12 +31,12 @@ export class AddMessage extends React.Component {
             type="text"
             value={this.state.message}
             placeholder="Enter text"
-            onChange={this.handleInputChange}
+            onChange={(e) => { this.handleInputChange(e); }}
           />
           <br />
           <Button
             bsStyle="primary"
-            onClick={this.handleSubmit}
+            onClick={() => { this.handleSubmit(); }}
           >
             Add message
           </Button>
@@ -51,3 +46,8 @@ export class AddMessage extends React.Component {
   }
 }
 
+AddMessage.propTypes = {
+  addMessageToChatRoom: React.PropTypes.func,
+};
+
+export default AddMessage;
