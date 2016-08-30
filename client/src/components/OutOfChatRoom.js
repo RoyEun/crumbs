@@ -6,7 +6,7 @@ const style = {
   height: '100%',
 };
 
-export const OutOfChatRoom = (props) => (
+export const OutOfChatRoom = ({ createChatRoom }) => (
   <div style={style}>
     <h2>you are not in a Chatroom!</h2>
     <br />
@@ -14,7 +14,7 @@ export const OutOfChatRoom = (props) => (
     <br />
     <Button
       bsStyle="primary"
-      onClick={props.createChatRoom}
+      onClick={createChatRoom}
     >
       Create a new Chatroom!
     </Button>

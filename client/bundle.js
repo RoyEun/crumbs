@@ -21154,7 +21154,6 @@
 
 	      setInterval(this.updateLocationState.bind(this), 500);
 
-	      //listens for a messages update from the main server
 	      socket.on('updateMessagesState', function (location) {
 	        var messages = location ? location.messages : null;
 	        _this2.setState({
@@ -21168,9 +21167,6 @@
 	        });
 	      });
 	    }
-
-	    //will continulally update our location state with our new position returned form navigator.geolocation and check if we are in chat room
-
 	  }, {
 	    key: 'setPosition',
 	    value: function setPosition(position) {
@@ -21184,9 +21180,6 @@
 	        this.updateMessagesState();
 	      }
 	    }
-
-	    //will watch our location and frequently call set position
-
 	  }, {
 	    key: 'updateLocationState',
 	    value: function updateLocationState() {
@@ -21196,25 +21189,16 @@
 	        console.log('geolocation not supported');
 	      }
 	    }
-
-	    //socket request to the main server to update messages state based on location state
-
 	  }, {
 	    key: 'updateMessagesState',
 	    value: function updateMessagesState() {
 	      this.props.socket.emit('updateMessagesState', this.state.location);
 	    }
-
-	    //socket request to the main server to create a new chatroom
-
 	  }, {
 	    key: 'createChatRoom',
 	    value: function createChatRoom() {
 	      this.props.socket.emit('createChatRoom', this.state.location);
 	    }
-
-	    //socket request to chatroom to append a new message to
-
 	  }, {
 	    key: 'addMessageToChatRoom',
 	    value: function addMessageToChatRoom(message) {
@@ -21296,7 +21280,11 @@
 
 	var _Login = __webpack_require__(438);
 
+	var _Login2 = _interopRequireDefault(_Login);
+
 	var _SignUp = __webpack_require__(439);
+
+	var _SignUp2 = _interopRequireDefault(_SignUp);
 
 	var _UserEntry = __webpack_require__(440);
 
@@ -21325,15 +21313,6 @@
 	  }
 
 	  _createClass(Authentication, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.validateUserSignup = this.validateUserSignup.bind(this);
-	      this.validateUserLogin = this.validateUserLogin.bind(this);
-	      this.handleClick = this.handleClick.bind(this);
-	      this.handleUserTextChange = this.handleUserTextChange.bind(this);
-	      this.handlePasswordTextChange = this.handlePasswordTextChange.bind(this);
-	    }
-	  }, {
 	    key: 'handleClick',
 	    value: function handleClick() {
 	      this.setState({
@@ -21354,22 +21333,27 @@
 	        passwordText: e.target.value
 	      });
 	    }
-
-	    // Pass down clickhandler to Login
-
 	  }, {
 	    key: 'validateUserLogin',
 	    value: function validateUserLogin() {
-	      this.props.socket.emit('validateUserLogin', { username: this.state.usernameText, password: this.state.passwordText });
+	      this.props.socket.emit('validateUserLogin', {
+	        username: this.state.usernameText,
+	        password: this.state.passwordText
+	      });
 	    }
 	  }, {
 	    key: 'validateUserSignup',
 	    value: function validateUserSignup() {
-	      this.props.socket.emit('validateUserSignup', { username: this.state.usernameText, password: this.state.passwordText });
+	      this.props.socket.emit('validateUserSignup', {
+	        username: this.state.usernameText,
+	        password: this.state.passwordText
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      var authStyle = {
 	        margin: 'auto auto',
 	        width: '80%',
@@ -21384,14 +21368,22 @@
 	        border: '1px solid black'
 	      };
 
-	      var login = _react2.default.createElement(_Login.Login, {
-	        validateUserLogin: this.validateUserLogin,
-	        signUp: this.handleClick
+	      var login = _react2.default.createElement(_Login2.default, {
+	        validateUserLogin: function validateUserLogin() {
+	          _this2.validateUserLogin();
+	        },
+	        signUp: function signUp() {
+	          _this2.handleClick();
+	        }
 	      });
 
-	      var signup = _react2.default.createElement(_SignUp.SignUp, {
-	        validateUserSignup: this.validateUserSignup,
-	        logIn: this.handleClick
+	      var signup = _react2.default.createElement(_SignUp2.default, {
+	        validateUserSignup: function validateUserSignup() {
+	          _this2.validateUserSignup();
+	        },
+	        logIn: function logIn() {
+	          _this2.handleClick();
+	        }
 	      });
 
 	      var pageToRender = !!this.state.login ? login : signup;
@@ -21414,8 +21406,12 @@
 	          )
 	        ),
 	        _react2.default.createElement(_UserEntry.UserEntry, {
-	          userChange: this.handleUserTextChange,
-	          passwordChange: this.handlePasswordTextChange,
+	          userChange: function userChange(e) {
+	            _this2.handleUserTextChange(e);
+	          },
+	          passwordChange: function passwordChange(e) {
+	            _this2.handlePasswordTextChange(e);
+	          },
 	          usernameText: this.state.usernameText,
 	          passwordText: this.state.passwordText
 	        }),
@@ -40780,7 +40776,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Login = undefined;
 
 	var _react = __webpack_require__(1);
 
@@ -40790,7 +40785,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Login = exports.Login = function Login(props) {
+	var Login = function Login(_ref) {
+	  var signUp = _ref.signUp;
+	  var validateUserLogin = _ref.validateUserLogin;
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -40800,7 +40797,7 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Button,
 	        {
-	          onClick: props.signUp,
+	          onClick: signUp,
 	          bsStyle: 'link'
 	        },
 	        'Don\'t have an account?'
@@ -40808,7 +40805,7 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Button,
 	        {
-	          onClick: props.validateUserLogin.bind(undefined),
+	          onClick: validateUserLogin,
 	          bsStyle: 'primary'
 	        },
 	        'Log In'
@@ -40816,6 +40813,13 @@
 	    )
 	  );
 	};
+
+	Login.propTypes = {
+	  signUp: _react2.default.PropTypes.func,
+	  validateUserLogin: _react2.default.PropTypes.func
+	};
+
+	exports.default = Login;
 
 /***/ },
 /* 439 */
@@ -40826,7 +40830,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SignUp = undefined;
 
 	var _react = __webpack_require__(1);
 
@@ -40836,7 +40839,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var SignUp = exports.SignUp = function SignUp(props) {
+	var SignUp = function SignUp(_ref) {
+	  var logIn = _ref.logIn;
+	  var validateUserSignup = _ref.validateUserSignup;
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -40846,7 +40851,7 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Button,
 	        {
-	          onClick: props.logIn,
+	          onClick: logIn,
 	          bsStyle: 'link'
 	        },
 	        'Already have an account?'
@@ -40854,7 +40859,7 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Button,
 	        {
-	          onClick: props.validateUserSignup.bind(undefined),
+	          onClick: validateUserSignup,
 	          bsStyle: 'primary'
 	        },
 	        'Sign Up'
@@ -40862,6 +40867,13 @@
 	    )
 	  );
 	};
+
+	SignUp.propTypes = {
+	  logIn: _react2.default.PropTypes.func,
+	  validateUserSignup: _react2.default.PropTypes.func
+	};
+
+	exports.default = SignUp;
 
 /***/ },
 /* 440 */
@@ -40880,7 +40892,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var UserEntry = exports.UserEntry = function UserEntry(props) {
+	var UserEntry = exports.UserEntry = function UserEntry(_ref) {
+	  var userChange = _ref.userChange;
+	  var usernameText = _ref.usernameText;
+	  var passwordChange = _ref.passwordChange;
+	  var passwordText = _ref.passwordText;
 	  return _react2.default.createElement(
 	    "div",
 	    null,
@@ -40888,14 +40904,14 @@
 	      "form",
 	      null,
 	      _react2.default.createElement("input", {
-	        onChange: props.userChange,
-	        value: props.usernameText,
+	        onChange: userChange,
+	        value: usernameText,
 	        type: "text",
 	        placeholder: "username"
 	      }),
 	      _react2.default.createElement("input", {
-	        onChange: props.passwordChange,
-	        value: props.passwordText,
+	        onChange: passwordChange,
+	        value: passwordText,
 	        type: "password",
 	        placeholder: "password"
 	      })
@@ -40926,7 +40942,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Authenticated = exports.Authenticated = function Authenticated(props) {
+	var Authenticated = exports.Authenticated = function Authenticated(_ref) {
+	  var messages = _ref.messages;
+	  var userLoggedIn = _ref.userLoggedIn;
+	  var addMessageToChatRoom = _ref.addMessageToChatRoom;
+	  var createChatRoom = _ref.createChatRoom;
+	  var logOutUser = _ref.logOutUser;
+
 	  var appStyle = {
 	    margin: 'auto auto',
 	    width: '80%',
@@ -40938,16 +40960,16 @@
 	  };
 
 	  var chatRoom = _react2.default.createElement(_ChatRoom.ChatRoom, {
-	    messages: props.messages,
-	    user: props.userLoggedIn,
-	    addMessageToChatRoom: props.addMessageToChatRoom
+	    messages: messages,
+	    user: userLoggedIn,
+	    addMessageToChatRoom: addMessageToChatRoom
 	  });
 
 	  var outOfChatRoom = _react2.default.createElement(_OutOfChatRoom.OutOfChatRoom, {
-	    createChatRoom: props.createChatRoom
+	    createChatRoom: createChatRoom
 	  });
 
-	  var childToRender = !!props.messages ? chatRoom : outOfChatRoom;
+	  var childToRender = !!messages ? chatRoom : outOfChatRoom;
 
 	  return _react2.default.createElement(
 	    'div',
@@ -40957,7 +40979,7 @@
 	      {
 	        style: { float: 'right' },
 	        bsStyle: 'link',
-	        onClick: props.logOutUser
+	        onClick: logOutUser
 	      },
 	      'Logout'
 	    ),
@@ -41004,12 +41026,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ChatRoom = exports.ChatRoom = function ChatRoom(props) {
+	var ChatRoom = exports.ChatRoom = function ChatRoom(_ref) {
+	  var addMessageToChatRoom = _ref.addMessageToChatRoom;
+	  var messages = _ref.messages;
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_AddMessage.AddMessage, { addMessageToChatRoom: props.addMessageToChatRoom }),
-	    _react2.default.createElement(_MessageList.MessageList, { messages: props.messages })
+	    _react2.default.createElement(_AddMessage.AddMessage, { addMessageToChatRoom: addMessageToChatRoom }),
+	    _react2.default.createElement(_MessageList.MessageList, { messages: messages })
 	  );
 	};
 
@@ -41055,12 +41079,6 @@
 	  }
 
 	  _createClass(AddMessage, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.handleInputChange = this.handleInputChange.bind(this);
-	      this.handleSubmit = this.handleSubmit.bind(this);
-	    }
-	  }, {
 	    key: 'handleInputChange',
 	    value: function handleInputChange(e) {
 	      this.setState({
@@ -41078,6 +41096,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        'form',
 	        null,
@@ -41093,14 +41113,18 @@
 	            type: 'text',
 	            value: this.state.message,
 	            placeholder: 'Enter text',
-	            onChange: this.handleInputChange
+	            onChange: function onChange(e) {
+	              _this2.handleInputChange(e);
+	            }
 	          }),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
 	            _reactBootstrap.Button,
 	            {
 	              bsStyle: 'primary',
-	              onClick: this.handleSubmit
+	              onClick: function onClick() {
+	                _this2.handleSubmit();
+	              }
 	            },
 	            'Add message'
 	          )
@@ -41133,15 +41157,16 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var MessageList = exports.MessageList = function MessageList(props) {
+	var MessageList = exports.MessageList = function MessageList(_ref) {
+	  var messages = _ref.messages;
 	  return _react2.default.createElement(
 	    _reactBootstrap.Panel,
 	    { style: { fontWeight: 'bold' }, header: 'Chatroom messages' },
 	    _react2.default.createElement(
 	      _reactBootstrap.ListGroup,
 	      { fill: true },
-	      props.messages.map(function (message) {
-	        return _react2.default.createElement(_MessageListEntry.MessageListEntry, { message: message });
+	      messages.map(function (message, i) {
+	        return _react2.default.createElement(_MessageListEntry.MessageListEntry, { key: i, message: message });
 	      })
 	    )
 	  );
@@ -41171,10 +41196,16 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var MessageListEntry = exports.MessageListEntry = function MessageListEntry(props) {
+	  var _props$message = props.message;
+	  var username = _props$message.username;
+	  var message = _props$message.message;
+	  var createdAt = _props$message.createdAt;
+
+
 	  return _react2.default.createElement(
 	    _reactBootstrap.ListGroupItem,
 	    null,
-	    props.message.username + ' ' + props.message.message + ' ' + (0, _moment2.default)(props.message.createdAt).fromNow()
+	    username + ' ' + message + ' ' + (0, _moment2.default)(createdAt).fromNow()
 	  );
 	};
 
@@ -55250,7 +55281,8 @@
 	  height: '100%'
 	};
 
-	var OutOfChatRoom = exports.OutOfChatRoom = function OutOfChatRoom(props) {
+	var OutOfChatRoom = exports.OutOfChatRoom = function OutOfChatRoom(_ref) {
+	  var createChatRoom = _ref.createChatRoom;
 	  return _react2.default.createElement(
 	    'div',
 	    { style: style },
@@ -55270,7 +55302,7 @@
 	      _reactBootstrap.Button,
 	      {
 	        bsStyle: 'primary',
-	        onClick: props.createChatRoom
+	        onClick: createChatRoom
 	      },
 	      'Create a new Chatroom!'
 	    ),

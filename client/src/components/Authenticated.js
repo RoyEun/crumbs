@@ -3,7 +3,13 @@ import { ChatRoom } from './ChatRoom.js';
 import { OutOfChatRoom } from './OutOfChatRoom.js';
 import { Jumbotron, Button } from 'react-bootstrap';
 
-export const Authenticated = (props) => {
+export const Authenticated = ({
+  messages,
+  userLoggedIn,
+  addMessageToChatRoom,
+  createChatRoom,
+  logOutUser,
+}) => {
   const appStyle = {
     margin: 'auto auto',
     width: '80%',
@@ -16,27 +22,26 @@ export const Authenticated = (props) => {
 
   const chatRoom = (
     <ChatRoom
-      messages={props.messages}
-      user={props.userLoggedIn}
-      addMessageToChatRoom={props.addMessageToChatRoom}
+      messages={messages}
+      user={userLoggedIn}
+      addMessageToChatRoom={addMessageToChatRoom}
     />
   );
 
   const outOfChatRoom = (
     <OutOfChatRoom
-      createChatRoom={props.createChatRoom}
+      createChatRoom={createChatRoom}
     />
   );
 
-  const childToRender = !!props.messages ? chatRoom : outOfChatRoom;
-
+  const childToRender = !!messages ? chatRoom : outOfChatRoom;
 
   return (
     <div style={appStyle}>
       <Button
         style={{ float: 'right' }}
         bsStyle="link"
-        onClick={props.logOutUser}
+        onClick={logOutUser}
       >
         Logout
       </Button>

@@ -2,10 +2,9 @@ import React from 'react';
 import { AddMessage } from './AddMessage';
 import { MessageList } from './MessageList';
 
-
-export const ChatRoom = (props) => (
+export const ChatRoom = ({ addMessageToChatRoom, messages}) => (
   <div>
-    <AddMessage addMessageToChatRoom={props.addMessageToChatRoom} />
-    <MessageList messages={props.messages} />
+    <AddMessage addMessageToChatRoom={addMessageToChatRoom} />
+    <MessageList messages={messages} />
   </div>
 );

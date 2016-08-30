@@ -18,7 +18,6 @@ export default class App extends React.Component {
 
     setInterval(this.updateLocationState.bind(this), 500);
 
-    //listens for a messages update from the main server
     socket.on('updateMessagesState', (location) => {
       const messages = location ? location.messages : null;
       this.setState({
@@ -33,7 +32,6 @@ export default class App extends React.Component {
     });
   }
 
-  //will continulally update our location state with our new position returned form navigator.geolocation and check if we are in chat room
   setPosition(position) {
     const latRound = position.coords.latitude.toFixed(3);
     const lonRound = position.coords.longitude.toFixed(3);
@@ -46,7 +44,6 @@ export default class App extends React.Component {
     }
   }
 
-  //will watch our location and frequently call set position
   updateLocationState() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setPosition.bind(this), this.error);
@@ -55,17 +52,14 @@ export default class App extends React.Component {
     }
   }
 
-  //socket request to the main server to update messages state based on location state
   updateMessagesState() {
     this.props.socket.emit('updateMessagesState', this.state.location);
   }
 
-  //socket request to the main server to create a new chatroom
   createChatRoom() {
     this.props.socket.emit('createChatRoom', this.state.location);
   }
 
-  //socket request to chatroom to append a new message to
   addMessageToChatRoom(message) {
     this.props.socket.emit('addMessageToChatRoom', {
       location: this.state.location,

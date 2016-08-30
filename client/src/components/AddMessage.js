@@ -9,11 +9,6 @@ export class AddMessage extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   handleInputChange(e) {
     this.setState({
       message: e.target.value,
@@ -36,12 +31,12 @@ export class AddMessage extends React.Component {
             type="text"
             value={this.state.message}
             placeholder="Enter text"
-            onChange={this.handleInputChange}
+            onChange={(e) => { this.handleInputChange(e); }}
           />
           <br />
           <Button
             bsStyle="primary"
-            onClick={this.handleSubmit}
+            onClick={() => { this.handleSubmit(); }}
           >
             Add message
           </Button>
