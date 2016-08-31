@@ -1,16 +1,16 @@
 ## Description
-Crumbs is a location based chat room. Users can create or discover chat rooms, 
+Crumbs is a location based chat room. Users can create, discover, and interact with people based on where they are. 
 
 ## Table of Contents
 
-1. [Usage](#usage)
-1. [Getting Started](#getting-started)
-1. [Prerequisites](#prerequisites)
-1. [Installing Dependencies](#installing-dependencies)
-1. [The Tech Stack](#tech-stack)
-1. [Core Team](#core-team)
-1. [Contributing](#contributing)
-1. [Licensing](#license)
+1. Usage
+1. Getting Started
+1. Prerequisites
+1. Installing Dependencies
+1. The Tech Stack
+1. Core Team
+1. Contributing
+1. Licensing
 
 ## Usage
 
@@ -18,8 +18,6 @@ Crumbs is a location based chat room. Users can create or discover chat rooms,
 1. Select and authenticate platforms you would like to connect (Facebook, Twitter, and/or LinkedIn)
 1. For each platform, select posting preferences by entering your interests, autopost, and interval
 1. Sit back and relax! If you want a more hands on experience, you can schedule custom posts, manage your automatically generated post queue, and view your activity
-
-## Getting Started
 
 ## Prerequisites
 
