@@ -5,8 +5,8 @@ Crumbs is a location based chat room. Users can create or discover chat rooms,
 
 1. [Usage](#usage)
 1. [Getting Started](#getting-started)
-    1. [Prerequisites](#prerequisites)
-    1. [Installing Dependencies](#installing-dependencies)
+1. [Prerequisites](#prerequisites)
+1. [Installing Dependencies](#installing-dependencies)
 1. [The Tech Stack](#tech-stack)
 1. [Core Team](#core-team)
 1. [Contributing](#contributing)
@@ -21,14 +21,14 @@ Crumbs is a location based chat room. Users can create or discover chat rooms,
 
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
 
 Install [Node](https://nodejs.org/en/) and MongoDB in your development environment.
 
 As always, the [Airbnb Style Guide](https://github.com/airbnb/javascript) is preferred.
 You may configure your linter of choice; for us, Sublime Text with ESLinter was sufficient.  Dan Abramov's [guide](https://medium.com/@dan_abramov/lint-like-it-s-2015-6987d44c5b48#.ne1ikvdg9) may be useful.
 
-### Running The App In Local Environment
+## Running The App In Local Environment
 
 1.  Fork https://github.com/HRCrumbs/crumbs
 1.  Clone to local folder
