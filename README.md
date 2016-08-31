@@ -14,9 +14,8 @@ Crumbs is a location based chat room. Users can create, discover, and interact w
 ## Usage
 
 1. Go to site url and signup with a username and password
-1. Select and authenticate platforms you would like to connect (Facebook, Twitter, and/or LinkedIn)
-1. For each platform, select posting preferences by entering your interests, autopost, and interval
-1. Sit back and relax! If you want a more hands on experience, you can schedule custom posts, manage your automatically generated post queue, and view your activity
+1. Walk around (or use the developer console sensor emulation to simulate walking around)
+1. Create and interact with chat rooms
 
 ## Prerequisites
 
