@@ -1,13 +1,28 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
+import { render } from 'react-dom';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 
-import io from 'socket.io-client';
+import { Home, Account } from './containers';
+import { Roaming, Room } from './components/chat';
+import { Login, SignUp } from './components/user';
 
-const socket = io('http://localhost:3000');
+const authRequired = (nextState, replace) => {
+  if (localStorage.getItem('token') === null) {
+    replace('/users');
+  }
+};
 
-ReactDOM.render(
-  <App socket={socket} />,
-  document.getElementById('app')
-);
-
+render((
+  <Router history={browserHistory}>
+    <Route path="/" component={Home} onEnter={authRequired}>
+      <IndexRedirect to="/roaming" />
+      <Route path="/roaming" component={Roaming} />
+      <Route path="/chat-room" component={Room} />
+    </Route>
+    <Route path="/users" component={Account}>
+      <IndexRedirect to="/users/login" />
+      <Route path="/users/login" component={Login} />
+      <Route path="/users/sign-up" component={SignUp} />
+    </Route>
+  </Router>
+), document.getElementById('app'));

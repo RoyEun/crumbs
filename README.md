@@ -26,13 +26,11 @@ You may configure your linter of choice; for us, Sublime Text with ESLinter was 
 
 ## Running The App In Local Environment
 
-1.  Fork https://github.com/HRCrumbs/crumbs
+1.  Fork https://github.com/RoyEun/crumbs
 1.  Clone to local folder
-1.  ```mongod``` from command line
-1.  ```cd crumbs```
+1.  ```cd crumbs``
 1.  ```npm install```
-1.  ```npm start dev```
-1.  cd into /server/db/config.js and update the DATABASE_URL variable to point to your local mongo db
+1.  ```npm run dev```
 1.  Open browser to www.localhost:3000
 1.  User developer tools sensor emulator to manually move client around
 
