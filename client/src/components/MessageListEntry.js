@@ -1,8 +1,20 @@
 import React from 'react';
 import Moment from 'moment';
+import { ListGroupItem } from 'react-bootstrap';
 
-import { Panel, ListGroupItem } from 'react-bootstrap';
+export const MessageListEntry = (props) => {
+  const { username, message, createdAt } = props.message;
 
-export let MessageListEntry = ({message}) => (
-  <ListGroupItem> { message.message + ' ' + Moment(message.createdAt).fromNow() } </ListGroupItem>
-)
+  return (
+    <ListGroupItem>
+      {`${username} ${message} ${Moment(createdAt).fromNow()}`
+      }
+    </ListGroupItem>
+  );
+};
+
+MessageListEntry.propTypes = {
+  message: React.PropTypes.object,
+};
+
+export default MessageListEntry;

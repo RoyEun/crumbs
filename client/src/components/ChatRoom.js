@@ -1,22 +1,20 @@
 import React from 'react';
+import AddMessage from './AddMessage';
+import MessageList from './MessageList';
 
-import { PageHeader, Footer } from 'react-bootstrap';
+const ChatRoom = ({
+  addMessageToChatRoom,
+  messages,
+}) => (
+  <div>
+    <AddMessage addMessageToChatRoom={addMessageToChatRoom} />
+    <MessageList messages={messages} />
+  </div>
+);
 
-import { AddMessage } from './AddMessage';
-import { MessageList } from './MessageList';
+ChatRoom.propTypes = {
+  addMessageToChatRoom: React.PropTypes.func,
+  messages: React.PropTypes.array,
+};
 
-
-export class ChatRoom extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-      <AddMessage addMessageToChatRoom={this.props.addMessageToChatRoom}/>
-      <MessageList messages={this.props.messages}/>
-      </div>
-    )
-  }
-}
+export default ChatRoom;
